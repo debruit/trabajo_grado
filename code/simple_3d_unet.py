@@ -1,15 +1,9 @@
-# https://youtu.be/ScdCQqLtnis
-"""
-@author: Sreenivas Bhattiprolu
 
-Converted my standard 2D Unet to 3D. 
-
-"""
 
 from keras.models import Model
 from keras.layers import Input, Conv3D, MaxPooling3D, concatenate, Conv3DTranspose, Dropout
 
-kernel_initializer =  'he_uniform' #Try others if you want
+kernel_initializer =  'he_uniform' 
 
 
 ################################################################
@@ -20,7 +14,7 @@ def simple_unet_model(IMG_HEIGHT, IMG_WIDTH, IMG_DEPTH, IMG_CHANNELS):
     s = inputs
 
     #Contraction path
-    c1 = Conv3D(16, (3, 3, 3), activation='relu', kernel_initializer=kernel_initializer, padding='same')(s)
+    c1 = Conv3D(16, (3, 3, 3), activation='relu', kernel_initializer=kernel_initializer, padding='same', input_shape=(256,256,256,1))(s)
     c1 = Dropout(0.1)(c1)
     c1 = Conv3D(16, (3, 3, 3), activation='relu', kernel_initializer=kernel_initializer, padding='same')(c1)
     p1 = MaxPooling3D((2, 2, 2))(c1)
@@ -78,6 +72,6 @@ def simple_unet_model(IMG_HEIGHT, IMG_WIDTH, IMG_DEPTH, IMG_CHANNELS):
     return model
 
 #Test if everything is working ok. 
-model = simple_unet_model(320, 528, 528, 1)
+model = simple_unet_model(256, 256, 256, 1)
 print(model.input_shape)
 print(model.output_shape)

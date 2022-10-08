@@ -1,6 +1,17 @@
 import os
 import numpy as np
 
+from tensorflow.compat.v1 import ConfigProto
+from tensorflow.compat.v1 import InteractiveSession
+
+
+def fix_gpu():
+    config = ConfigProto()
+    config.gpu_options.allow_growth = True
+    session = InteractiveSession(config=config)
+
+
+
 
 def load_img(img_dir, img_list):
     images=[]
@@ -10,7 +21,7 @@ def load_img(img_dir, img_list):
             image = np.load(img_dir+image_name)
                       
             images.append(image)
-    images = np.array(images)
+    images = np.asarray(images).astype('float32')
     
     return(images)
 
@@ -37,37 +48,39 @@ def imageLoader(img_dir, img_list, mask_dir, mask_list, batch_size):
 
             batch_start += batch_size   
             batch_end += batch_size
+            
+fix_gpu()
 
 
 #Test the generator
 
-from matplotlib import pyplot as plt
-import random
+# from matplotlib import pyplot as plt
+# import random
 
-train_img_dir = "training_data2/input_data/train/imgs/"
-train_mask_dir = "training_data2/input_data/train/masks/"
-train_img_list=os.listdir(train_img_dir)
-train_mask_list = os.listdir(train_mask_dir)
+# train_img_dir = "training_data2/input_data/train/imgs/"
+# train_mask_dir = "training_data2/input_data/train/masks/"
+# train_img_list=os.listdir(train_img_dir)
+# train_mask_list = os.listdir(train_mask_dir)
 
-batch_size = 8
+# batch_size = 2
 
-train_img_datagen = imageLoader(train_img_dir, train_img_list, 
-                                train_mask_dir, train_mask_list, batch_size)
+# train_img_datagen = imageLoader(train_img_dir, train_img_list, 
+#                                 train_mask_dir, train_mask_list, batch_size)
 
-#Verify generator
-img, msk = train_img_datagen.__next__()
+# #Verify generator
+# img, msk = train_img_datagen.__next__()
 
 
-img_num = 0
-test_img=img[img_num]
-test_mask=msk[img_num]
+# img_num = 0
+# test_img=img[img_num]
+# test_mask=msk[img_num]
 
-plt.figure(figsize=(12, 8))
+# plt.figure(figsize=(12, 8))
 
-plt.subplot(221)
-plt.imshow(test_img[:,:,138], cmap='gray')
-plt.title('Image flair')
-plt.subplot(224)
-plt.imshow(test_mask[:,:,138])
-plt.title('Mask')
-plt.show()
+# plt.subplot(221)
+# plt.imshow(test_img[:,:,18], cmap='gray')
+# plt.title('Image flair')
+# plt.subplot(224)
+# plt.imshow(test_mask[:,:,18])
+# plt.title('Mask')
+# plt.show()
