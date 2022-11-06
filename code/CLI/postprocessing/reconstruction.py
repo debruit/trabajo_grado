@@ -1,10 +1,9 @@
 import nibabel as nib
 import numpy as np
 
-def convert_img(img, pred, output_path):
+def convert_img(info_img, pred, output_path):
     
-    img_nii = nib.load(img)
-    img_data = img_nii.get_fdata()
+    img_data = info_img.get_fdata()
     
     
     prediction = pred[0,...,0]
@@ -15,7 +14,7 @@ def convert_img(img, pred, output_path):
     szs_y = int(temp_sz_y/2)
     temp_pred[85:245, szs_y+25:(temp_pred.shape[1] - szs_y) + 25, 70:198] = prediction
     
-    pred_img = nib.Nifti1Image(temp_pred, img_nii.affine, img_nii.header)
+    pred_img = nib.Nifti1Image(temp_pred, info_img.affine, info_img.header)
     
     nib.save(pred_img, output_path)
     

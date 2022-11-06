@@ -4,7 +4,7 @@ import tensorflow as tf
 from datetime import datetime
 import segmentation_models_3D as sm
 
-import unet
+from train import unet
 from preprocessing import generator
 
 
@@ -29,7 +29,7 @@ def fit_model(imgs_folder, mask_folder, imgs_val_folder, mask_val_folder, output
     validation_generator = generator.image_gen(val_img_dir, val_img_list, val_mask_dir, val_mask_list, batch_size)
 
 
-    dice_loss = sm.losses.DiceLoss(class_weights=np.array([0.5, 34.5])) 
+    dice_loss = sm.losses.DiceLoss() 
 
     metrics = [sm.metrics.FScore(),'accuracy']
 
@@ -46,7 +46,8 @@ def fit_model(imgs_folder, mask_folder, imgs_val_folder, mask_val_folder, output
 
 
 
-    callback = [tf.keras.callbacks.ModelCheckpoint(output_model,verbose=1,save_best_only=True)]
+    callback = [tf.keras.callbacks.ModelCheckpoint(output_model,verbose=1,save_best_only=True),
+                tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=100),]
 
 
     model.compile(optimizer = optim, loss=dice_loss, metrics=metrics)
@@ -69,5 +70,7 @@ def fit_model(imgs_folder, mask_folder, imgs_val_folder, mask_val_folder, output
 
     fin = datetime.now()
     time_fin = (fin.hour, fin.minute)
+    
+    time_model = tuple(map(lambda i, j: i - j, time_fin, time_ini))
 
-    print(time_ini,time_fin)
+    print('Training time: ',time_model)

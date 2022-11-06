@@ -70,8 +70,8 @@ def unet(IMG_HEIGHT, IMG_WIDTH, IMG_DEPTH, IMG_CHANNELS):
     return model
 
 #Test if everything is working ok. 
-model = unet(160, 96, 128, 1)
+# model = unet(160, 96, 128, 1)
 
-print(model.summary())
-print(model.input_shape)
-print(model.output_shape)
+# print(model.summary())
+# print(model.input_shape)
+# print(model.output_shape)

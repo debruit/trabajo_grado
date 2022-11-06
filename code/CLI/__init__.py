@@ -1,4 +1,3 @@
-from predict.pred_img import *
-from preprocessing.crop import *
-from preprocessing.generator import *
-from postprocessing.reconstruction import *
+from predict import *
+from preprocessing import *
+from postprocessing import *
