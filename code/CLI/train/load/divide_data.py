@@ -1,6 +1,6 @@
 import splitfolders
 import os
-from train import fit 
+from train.train_m import fit 
 
 def divide(output_model):
     print('Dividing images into train and validation folders...')

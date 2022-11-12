@@ -1,9 +1,12 @@
 import numpy as np
-from predict import segment
+from segment.predict import segment
 from preprocessing import crop
     
 
 def prepare_data(model, info_img, input_img, output_path):
+    
+    print("Preparing data...")
+    
     temp_img = crop.crop_img(input_img)
 
     temp_img_input = np.expand_dims(temp_img, axis=0)

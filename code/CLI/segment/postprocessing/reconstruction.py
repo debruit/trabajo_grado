@@ -3,6 +3,8 @@ import numpy as np
 
 def convert_img(info_img, pred, output_path):
     
+    print("Reconstructing image...")    
+    
     img_data = info_img.get_fdata()
     
     

@@ -8,16 +8,16 @@ def load_img(img_dir, img_list):
             image = np.load(img_dir+image_name)
                       
             images.append(image)
-    images = np.asarray(images)
+    images = np.array(images)
     
     return(images)
 
 
 
 
-def image_gen(img_folder, imgs, mask_folder, masks, batch_size):
+def imageLoader(img_dir, img_list, mask_dir, mask_list, batch_size):
 
-    L = len(img_folder)
+    L = len(img_list)
 
     #keras needs the generator infinite, so we will use while true  
     while True:
@@ -28,10 +28,10 @@ def image_gen(img_folder, imgs, mask_folder, masks, batch_size):
         while batch_start < L:
             limit = min(batch_end, L)
                        
-            X = load_img(img_folder, imgs[batch_start:limit])
-            Y = load_img(mask_folder, masks[batch_start:limit])
+            X = load_img(img_dir, img_list[batch_start:limit])
+            Y = load_img(mask_dir, mask_list[batch_start:limit])
 
-            yield (X,Y) 
+            yield (X,Y) #a tuple with two numpy arrays with batch_size samples     
 
             batch_start += batch_size   
             batch_end += batch_size

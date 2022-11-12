@@ -1,9 +1,15 @@
-import nibabel as nib    
-from preprocessing import prepare_data_seg
+import nibabel as nib
+import os    
+from segment.load import prepare_data_seg
 import glob
 from tqdm import tqdm
 
 def load_data(model, input_path, output_path):
+    
+    print("Loading data...")
+    
+    if not os.path.exists(os.getcwd()+'/segmentations'):
+        os.mkdir(os.getcwd()+'/segmentations')
     
     if(str(input_path).__contains__('.nii')):
         info_img = nib.load(input_path)
@@ -16,6 +22,8 @@ def load_data(model, input_path, output_path):
         else:
             output = output_path +'/'+ out_format
             
+        print("Image loaded")
+        
         prepare_data_seg.prepare_data(model, info_img, img_data, output)
     else:
         list_imgs = sorted(glob.glob(input_path + '/*.nii*'))
@@ -29,5 +37,7 @@ def load_data(model, input_path, output_path):
                 output = 'segmentations/' + out_format
             else:
                 output = output_path +'/'+ out_format
+            
+            print("Image loaded")
             
             prepare_data_seg.prepare_data(model, info_img, img_data, output)

@@ -5,20 +5,26 @@ import glob
 import numpy as np
 import os
 
-from preprocessing import prepare_data_train as prep
-from preprocessing import divide_data
+from train.load import prepare_data_train as prep
+from train.load import divide_data
 
 
 def load_input_data(dataset_path, output_model):
+    
+    print("Loading data...")
 
     scaler = MinMaxScaler()
     
-    os.mkdir(os.getcwd()+'/imgs_preprocessed')
+    if not os.path.exists(os.getcwd()+'/imgs_preprocessed'):
+        os.mkdir(os.getcwd()+'/imgs_preprocessed')
+            
+        os.mkdir(os.getcwd()+'/imgs_preprocessed/imgs_npy')
+        os.mkdir(os.getcwd()+'/imgs_preprocessed/masks_npy')
         
-    os.mkdir(os.getcwd()+'/imgs_preprocessed/imgs_npy')
-    os.mkdir(os.getcwd()+'/imgs_preprocessed/masks_npy')
+    if(str(dataset_path).__contains__('.nii')):
+        print('Dataset needs to be a folder with .nii images, not a single .nii image')
+        exit()
 
-    # os.path.join(os.getcwd()+'/*.nii.gz')
 
     imgs_list = sorted(glob.glob(dataset_path+'/imgs/*.ni*'))
     mask_list = sorted(glob.glob(dataset_path+'/masks/*.ni*'))
@@ -33,7 +39,7 @@ def load_input_data(dataset_path, output_model):
         
         temp_image_t1 = scaler.fit_transform(temp_image_t1ce.reshape(-1, temp_image_t1ce.shape[-1])).reshape(temp_image_t1ce.shape)
         
-        img = prep.prepare_data(temp_image_t1)
+        imgs = prep.prepare_data(temp_image_t1)
     
             
         temp_mask = nib.load(mask_list[img]).get_fdata()
@@ -43,7 +49,7 @@ def load_input_data(dataset_path, output_model):
         
 
         
-        np.save(os.getcwd()+'/imgs_preprocessed/imgs_npy/image_'+str(img)+'.npy', img)
+        np.save(os.getcwd()+'/imgs_preprocessed/imgs_npy/image_'+str(img)+'.npy', imgs)
         np.save(os.getcwd()+'/imgs_preprocessed/masks_npy/mask_'+str(img)+'.npy', mask)  
 
     

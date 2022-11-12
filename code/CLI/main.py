@@ -1,6 +1,6 @@
 import argparse
-from preprocessing import load_data_train
-from predict import pred_img
+from train.load import load_data_train
+from segment.load import load_model
 
 parser = argparse.ArgumentParser(description='Initialize the system either \
         to segment adipose tissue on the input image(s) (MRI) or \
@@ -21,16 +21,16 @@ if(args.system == 'segment'):
     if(args.input == 'None'):
         print('Please provide an input image(s) path')
         exit()
-    pred_img.predict(args.model, args.input, args.output)
+    load_model.load_model_data(args.model, args.input, args.output)
     
 elif(args.system == 'train'):
     if(args.dataset == 'None'):
-        print('Please provide a dataset path for training the model')
+        print('Please provide a dataset path for the model to train')
         exit()
-    train_imgs, train_masks, val_imgs, val_masks = load_data_train.load_input_data(args.dataset, args.output_model)
+    load_data_train.load_input_data(args.dataset, args.output_model)
 
 else:
-    print('Need to specify -s flag to either segment or train')
+    print('Need to specify -s flag either to segment or train')
     exit()
 
 # print(args)
