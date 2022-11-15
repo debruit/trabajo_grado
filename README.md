@@ -14,15 +14,21 @@ Initialize the system either to segment adipose tissue on the input image(s) (MR
 
 optional arguments:
   -h, --help            show this help message and exit
+
   -s SYSTEM, --system SYSTEM
                         Initialize the system (segment or train)
+
   -i INPUT, --input INPUT
                         Input image(s) path
+
   -o OUTPUT, --output OUTPUT
                         Output image(s) path
+
   -m MODEL, --model MODEL
                         Model path for prediction
+
   -d DATASET, --dataset DATASET
                         Dataset path for training
+                        
   -om OUTPUT_MODEL, --output-model OUTPUT_MODEL
                         Output model path
