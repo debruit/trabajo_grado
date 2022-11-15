@@ -1,3 +1,9 @@
+## =========================================================================
+## @author Juan Sebastián Ruiz Bulla (ruizju@javeriana.edu.co)
+## @author David Alejandro Castillo Chíquiza (castillo_da@javeriana.edu.co)
+## @author Oscar David Falla Pulido (falla_o@javeriana.edu.co)
+## =========================================================================
+
 import numpy as np
 from segment.predict import segment
 from preprocessing import crop

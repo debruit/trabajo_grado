@@ -1,3 +1,9 @@
+## =========================================================================
+## @author Juan Sebastián Ruiz Bulla (ruizju@javeriana.edu.co)
+## @author David Alejandro Castillo Chíquiza (castillo_da@javeriana.edu.co)
+## @author Oscar David Falla Pulido (falla_o@javeriana.edu.co)
+## =========================================================================
+
 import argparse
 from train.load import load_data_train
 from segment.load import load_model
@@ -33,4 +39,3 @@ else:
     print('Need to specify -s flag either to segment or train')
     exit()
 
-# print(args)
