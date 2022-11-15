@@ -13,7 +13,7 @@ parser.add_argument('-o','--output', help='Output image(s) path', default='segme
 parser.add_argument('-m','--model', help='Model path for prediction', default='model.h5')
 
 parser.add_argument('-d', '--dataset', help='Dataset path for training', default='None')
-parser.add_argument('-om', '--output-model', help='Output model path', default='model.h5')
+parser.add_argument('-om', '--output-model', help='Output model path', default='model_adipose_tissue.h5')
 
 args = parser.parse_args()
 
